@@ -6,16 +6,16 @@
 export function calculateOracleScore(content, userData, searchQuery) {
   let score = 0;
   const weights = {
-    searchMatch: 0.30,      // 30% - How well it matches the search
-    preferences: 0.25,      // 25% - Personal preferences
-    thumbs: 0.20,           // 20% - Thumbs up/down history
-    myList: 0.15,           // 15% - Similar to items in My List
-    watchHistory: 0.10      // 10% - Similar to watch history
+    searchMatch: 0.50,      // 50% - How well it matches the search (increased)
+    preferences: 0.20,      // 20% - Personal preferences
+    thumbs: 0.15,           // 15% - Thumbs up/down history
+    myList: 0.10,           // 10% - Similar to items in My List
+    watchHistory: 0.05      // 5% - Similar to watch history
   };
 
-  // 1. SEARCH MATCH SCORE (from AI)
-  const searchMatchScore = content.matchScore || 0.5;
-  score += searchMatchScore * weights.searchMatch;
+  // 1. SEARCH MATCH SCORE (from AI) - Boosted baseline
+  const searchMatchScore = (content.matchScore || 0.7) + 0.1; // Add 10% baseline boost
+  score += Math.min(searchMatchScore, 1) * weights.searchMatch;
 
   // 2. PERSONAL PREFERENCES SCORE
   const prefsScore = calculatePreferencesScore(content, userData);
@@ -41,7 +41,7 @@ function calculatePreferencesScore(content, userData) {
   const savedPrefs = localStorage.getItem('oracle_personal_preferences');
   const personalPrefs = savedPrefs ? JSON.parse(savedPrefs) : {};
   
-  let score = 0.5; // Base score
+  let score = 0.7; // Base score (increased from 0.5)
   
   // Favorite genres boost
   if (personalPrefs.favoriteGenres?.length > 0 && content.genres) {
@@ -100,10 +100,10 @@ function calculatePreferencesScore(content, userData) {
 
 function calculateThumbsScore(content, userData) {
   if (!userData.thumbs || Object.keys(userData.thumbs).length === 0) {
-    return 0.5; // Neutral if no thumbs data
+    return 0.7; // Higher neutral if no thumbs data
   }
   
-  let score = 0.5;
+  let score = 0.7;
   const thumbsList = Object.entries(userData.thumbs);
   
   // Find similar content based on genres
@@ -134,10 +134,10 @@ function calculateThumbsScore(content, userData) {
 
 function calculateMyListScore(content, userData) {
   if (!userData.myList || userData.myList.length === 0) {
-    return 0.5; // Neutral if no list data
+    return 0.7; // Higher neutral if no list data
   }
   
-  let score = 0.5;
+  let score = 0.7;
   const myListGenres = new Set();
   
   // Extract genres from My List
@@ -158,10 +158,10 @@ function calculateMyListScore(content, userData) {
 
 function calculateWatchHistoryScore(content, userData) {
   if (!userData.watchHistory || userData.watchHistory.length === 0) {
-    return 0.5; // Neutral if no history
+    return 0.7; // Higher neutral if no history
   }
   
-  let score = 0.5;
+  let score = 0.7;
   const recentGenres = new Set();
   const recentHighRated = [];
   

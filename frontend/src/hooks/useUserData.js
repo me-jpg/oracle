@@ -117,17 +117,35 @@ export function useUserData() {
   };
 
   const setThumbsUp = (contentId) => {
-    setThumbs(prev => ({
-      ...prev,
-      [contentId]: { type: 'up', timestamp: Date.now() }
-    }));
+    setThumbs(prev => {
+      // If already thumbs up, remove it (toggle off)
+      if (prev[contentId]?.type === 'up') {
+        const newThumbs = { ...prev };
+        delete newThumbs[contentId];
+        return newThumbs;
+      }
+      // Otherwise set to thumbs up
+      return {
+        ...prev,
+        [contentId]: { type: 'up', timestamp: Date.now() }
+      };
+    });
   };
 
   const setThumbsDown = (contentId) => {
-    setThumbs(prev => ({
-      ...prev,
-      [contentId]: { type: 'down', timestamp: Date.now() }
-    }));
+    setThumbs(prev => {
+      // If already thumbs down, remove it (toggle off)
+      if (prev[contentId]?.type === 'down') {
+        const newThumbs = { ...prev };
+        delete newThumbs[contentId];
+        return newThumbs;
+      }
+      // Otherwise set to thumbs down
+      return {
+        ...prev,
+        [contentId]: { type: 'down', timestamp: Date.now() }
+      };
+    });
   };
 
   const getThumb = (contentId) => {

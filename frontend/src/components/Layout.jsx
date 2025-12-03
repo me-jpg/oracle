@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Layout({ children, activeTab, setActiveTab, setShowPersonalPrefs, showNav = true }) {
+export function Layout({ children, activeTab, setActiveTab, setShowPersonalPrefs, onLogoClick, showNav = true }) {
   return (
     <div className="min-h-screen bg-black">
       {/* Clean Professional Header */}
@@ -15,21 +15,73 @@ export function Layout({ children, activeTab, setActiveTab, setShowPersonalPrefs
             <div className="flex items-center gap-6">
               {/* Oracle Logo - clickable */}
               <button
-                onClick={() => setActiveTab('search')}
-                className="flex items-center hover:opacity-70 transition-all duration-200 relative group"
+                onClick={onLogoClick || (() => setActiveTab('search'))}
+                className="flex items-center hover:opacity-80 transition-all duration-300 relative group"
               >
                 {/* Purple glow behind Oracle */}
                 <div className="absolute -inset-6 bg-purple-600/10 rounded-full blur-2xl -z-10 animate-pulse"></div>
                 
-                <span className="text-2xl font-black text-white tracking-tight flex items-center">
-                  {/* Eye logo replacing the O */}
-                  <span className="inline-flex items-center justify-center w-5 h-5 relative" style={{ marginRight: '2px' }}>
-                    <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="20" cy="20" r="18" fill="white" stroke="white" strokeWidth="2"/>
-                      <circle cx="20" cy="14" r="5" fill="black"/>
+                <span className="text-2xl font-bold text-white tracking-tight flex items-center">
+                  {/* Refined Eye logo replacing the O - spacing matches letter-spacing in "racle" */}
+                  <span className="inline-flex items-center justify-center w-6 h-6 relative" style={{ marginRight: '0.01em' }}>
+                    <svg width="24" height="24" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        {/* Gradient for outer ring */}
+                        <linearGradient id="outerRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: '#e0e0e0', stopOpacity: 1 }} />
+                        </linearGradient>
+                        {/* Gradient for inner pupil */}
+                        <radialGradient id="pupilGrad" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" style={{ stopColor: '#1a1a1a', stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: '#000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                        {/* Shadow */}
+                        <filter id="shadow">
+                          <feDropShadow dx="0" dy="1" stdDeviation="1" floodOpacity="0.3"/>
+                        </filter>
+                      </defs>
+                      
+                      {/* Outer circle (white ring) */}
+                      <circle 
+                        cx="24" 
+                        cy="24" 
+                        r="19" 
+                        fill="url(#outerRing)" 
+                        stroke="#f0f0f0" 
+                        strokeWidth="1.5"
+                        filter="url(#shadow)"
+                      />
+                      
+                      {/* Inner circle (background) */}
+                      <circle 
+                        cx="24" 
+                        cy="24" 
+                        r="16" 
+                        fill="#fafafa"
+                      />
+                      
+                      {/* Pupil (black dot) - positioned higher */}
+                      <ellipse 
+                        cx="24" 
+                        cy="18" 
+                        rx="7" 
+                        ry="8" 
+                        fill="url(#pupilGrad)"
+                      />
+                      
+                      {/* Subtle highlight on pupil */}
+                      <ellipse 
+                        cx="26" 
+                        cy="16" 
+                        rx="2" 
+                        ry="2.5" 
+                        fill="white" 
+                        opacity="0.25"
+                      />
                     </svg>
                   </span>
-                  <span>racle</span>
+                  <span className="font-extrabold">racle</span>
                 </span>
               </button>
             </div>
@@ -88,10 +140,12 @@ export function Layout({ children, activeTab, setActiveTab, setShowPersonalPrefs
               {showNav && (
               <button
                 onClick={() => setShowPersonalPrefs(true)}
-                className="text-white hover:opacity-70 transition-all duration-200 hover:scale-110"
+                className="relative text-white/70 hover:text-white/90 transition-all duration-300 hover:scale-110 group"
                 aria-label="Preferences"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {/* Purple glow behind icon */}
+                <div className="absolute -inset-2 bg-purple-600/15 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </button>

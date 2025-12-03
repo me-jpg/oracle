@@ -26,9 +26,9 @@ export function SearchBar({ onSearch, loading }) {
   return (
     <div className="w-full space-y-6">
       <form onSubmit={handleSubmit}>
-        <div className="relative group">
-          {/* Enhanced purple glow - contained */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-500 rounded-xl blur-xl opacity-20 group-hover:opacity-35 group-focus-within:opacity-45 transition-opacity duration-1000"></div>
+        <div className="relative group overflow-hidden rounded-xl">
+          {/* Enhanced purple glow - contained within search bar */}
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-500 rounded-xl blur-xl opacity-20 group-hover:opacity-35 group-focus-within:opacity-45 transition-opacity duration-1000"></div>
           
           <div className="relative">
             <input

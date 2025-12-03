@@ -18,7 +18,6 @@ export function SetupFlow({ onComplete, showClose }) {
   const [rentBuy, setRentBuy] = useState({ rent: false, buy: false });
   const [subscriptionOnly, setSubscriptionOnly] = useState(false);
   const [showPersonalPrefs, setShowPersonalPrefs] = useState(false);
-  const [showCompletionMessage, setShowCompletionMessage] = useState(false);
   const [personalPrefs, setPersonalPrefs] = useState({
     favoriteGenres: [],
     dislikedGenres: [],
@@ -52,11 +51,10 @@ export function SetupFlow({ onComplete, showClose }) {
 
   const handleComplete = () => {
     localStorage.setItem('oracle_personal_preferences', JSON.stringify(personalPrefs));
-    setShowCompletionMessage(true);
+    finishSetup();
   };
 
   const finishSetup = () => {
-    setShowCompletionMessage(false);
     onComplete({
       services,
       rentBuy: subscriptionOnly ? { rent: false, buy: false } : rentBuy
@@ -93,9 +91,9 @@ export function SetupFlow({ onComplete, showClose }) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] relative">
         {/* Personalization heading at the very top */}
-        <div className="absolute -top-12 left-0 right-0 text-center py-4">
-          <p className="text-sm text-white/60 font-medium">
-            Smarter movie search powered by AI - built around <span className="text-purple-400 font-bold">YOU</span>
+        <div className="absolute -top-16 left-0 right-0 text-center py-4">
+          <p className="text-base text-white/80 font-bold tracking-wide">
+            Smarter movie search powered by AI - built around <span className="text-purple-400 font-extrabold">YOU</span>
           </p>
         </div>
         
@@ -331,29 +329,6 @@ export function SetupFlow({ onComplete, showClose }) {
           </div>
 
         </div>
-
-        {/* Completion Message Modal */}
-        {showCompletionMessage && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-black border border-white/[0.08] rounded-xl p-8 max-w-md mx-4 relative">
-              <div className="absolute -inset-1 bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-xl blur-xl -z-10"></div>
-              
-              <div className="space-y-4 text-center">
-                <h3 className="text-2xl font-bold text-white">All Set!</h3>
-                <p className="text-white/60 text-sm">
-                  You can change your streaming services and preferences anytime by clicking the person icon in the top right.
-                </p>
-                
-                <button
-                  onClick={finishSetup}
-                  className="w-full mt-6 px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-white/90 transition-all text-sm"
-                >
-                  Start Exploring
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     );
   }
@@ -475,29 +450,6 @@ export function SetupFlow({ onComplete, showClose }) {
             </button>
           </div>
         </div>
-
-        {/* Completion Message Modal */}
-        {showCompletionMessage && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-black border border-white/[0.08] rounded-xl p-8 max-w-md mx-4 relative">
-              <div className="absolute -inset-1 bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-xl blur-xl -z-10"></div>
-              
-              <div className="space-y-4 text-center">
-                <h3 className="text-2xl font-bold text-white">All Set!</h3>
-                <p className="text-white/60 text-sm">
-                  You can change your streaming services and preferences anytime by clicking the person icon in the top right.
-                </p>
-                
-                <button
-                  onClick={finishSetup}
-                  className="w-full mt-6 px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-white/90 transition-all text-sm"
-                >
-                  Start Exploring
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     );
   }
