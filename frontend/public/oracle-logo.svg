@@ -1,0 +1,8 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer white circle -->
+  <circle cx="20" cy="20" r="18" fill="white" stroke="white" stroke-width="2"/>
+  
+  <!-- Small black hole near top (like an eye) -->
+  <circle cx="20" cy="14" r="4" fill="black"/>
+</svg>
+
