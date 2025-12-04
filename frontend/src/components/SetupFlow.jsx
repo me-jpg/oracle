@@ -248,7 +248,7 @@ export function SetupFlow({ onComplete, showClose }) {
                   : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]'
               }`}
             >
-              <div className="font-semibold text-sm">No, prioritize subscriptions</div>
+              <div className="font-semibold text-sm">Prioritize Subscriptions</div>
               <div className="text-xs opacity-70">Free with my services</div>
             </button>
           </div>

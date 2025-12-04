@@ -75,7 +75,7 @@ export function StreamingDeals() {
               }`}
             >
               {deal.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-purple-500 rounded-full text-xs font-bold text-white">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 bg-gradient-to-r from-purple-600 to-purple-500 rounded-full text-base font-bold text-white">
                   Best Value
                 </div>
               )}
